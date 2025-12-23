@@ -1,0 +1,12 @@
+C:\Users\asus\Desktop\Spinel\Task\Back-End\Todo_App.Domain\bin\Debug\net10.0\Todo_App.Domain.deps.json
+C:\Users\asus\Desktop\Spinel\Task\Back-End\Todo_App.Domain\bin\Debug\net10.0\Todo_App.Domain.dll
+C:\Users\asus\Desktop\Spinel\Task\Back-End\Todo_App.Domain\bin\Debug\net10.0\Todo_App.Domain.pdb
+C:\Users\asus\Desktop\Spinel\Task\Back-End\Todo_App.Domain\obj\Debug\net10.0\Todo_App.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\asus\Desktop\Spinel\Task\Back-End\Todo_App.Domain\obj\Debug\net10.0\Todo_App.Domain.AssemblyInfoInputs.cache
+C:\Users\asus\Desktop\Spinel\Task\Back-End\Todo_App.Domain\obj\Debug\net10.0\Todo_App.Domain.AssemblyInfo.cs
+C:\Users\asus\Desktop\Spinel\Task\Back-End\Todo_App.Domain\obj\Debug\net10.0\Todo_App.Domain.csproj.CoreCompileInputs.cache
+C:\Users\asus\Desktop\Spinel\Task\Back-End\Todo_App.Domain\obj\Debug\net10.0\Todo_App.Domain.dll
+C:\Users\asus\Desktop\Spinel\Task\Back-End\Todo_App.Domain\obj\Debug\net10.0\refint\Todo_App.Domain.dll
+C:\Users\asus\Desktop\Spinel\Task\Back-End\Todo_App.Domain\obj\Debug\net10.0\Todo_App.Domain.pdb
+C:\Users\asus\Desktop\Spinel\Task\Back-End\Todo_App.Domain\obj\Debug\net10.0\ref\Todo_App.Domain.dll
+C:\Users\asus\Desktop\Spinel\Task\Back-End\Todo_App.Domain\obj\Debug\net10.0\Todo_App.Domain.sourcelink.json

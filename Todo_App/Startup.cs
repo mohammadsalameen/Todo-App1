@@ -1,4 +1,5 @@
 ﻿using Todo_App.DataAccess;
+using Application;
 namespace Todo_App
 {
     public class Startup
@@ -16,7 +17,7 @@ namespace Todo_App
             // Add controllers
             services.AddControllers();
 
-            //services.AddApplication();
+            services.AddApplication();
 
             // Add DB access
             services.AddDataAccess(Configuration);
