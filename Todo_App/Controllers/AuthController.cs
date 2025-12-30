@@ -10,7 +10,11 @@ namespace Todo_App.Controllers
     public class AuthController : ApiController
     {
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] CreateUserCommand req) =>
+        public async Task<IActionResult> Register([FromBody] RegisterCommand req) =>
+            ResponseToFE(await Mediator.Send(req));
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginCommand req) =>
             ResponseToFE(await Mediator.Send(req));
 
         [HttpGet("")]

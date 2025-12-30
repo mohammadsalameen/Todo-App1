@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Todo_App.Application.Tasks.Commands;
 
@@ -9,6 +10,7 @@ namespace Todo_App.Controllers
     public class TasksController : ApiController
     {
         [HttpPost()]
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateTaskCommand req) =>
             ResponseToFE(await Mediator.Send(req));
 
