@@ -11,7 +11,7 @@
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
 
-    <!-- MediatR (NO Extensions in v14) -->
+    <!-- MediatR -->
     <PackageReference Include="MediatR" Version="14.0.0" />
 
     <!-- JWT -->

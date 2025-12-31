@@ -1,6 +1,7 @@
 ﻿using Application;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -88,6 +89,9 @@ namespace Todo_App
             }
         });
             });
+            
+            // Send Email
+            services.AddTransient<IEmailSender, EmailSender>(); 
         }
 
 
