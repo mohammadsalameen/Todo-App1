@@ -24,9 +24,7 @@ namespace Todo_App.Controllers
             Ok(await Mediator.Send(new GetUserQuery()));
 
         [HttpGet("confirm-email")]
-        public async Task<IActionResult> ConfirmEmail(
-    [FromQuery] string token,
-    [FromQuery] string userId)
+        public async Task<IActionResult> ConfirmEmail([FromQuery] string token, [FromQuery] string userId)
         {
             var result = await Mediator.Send(new ConfirmEmailCommand
             {
@@ -36,5 +34,13 @@ namespace Todo_App.Controllers
 
             return ResponseToFE(result);
         }
+
+        [HttpPost("send-code")]
+        public async Task<IActionResult> SendCode([FromBody] SendCodeCommand req) =>
+            ResponseToFE(await Mediator.Send(req));
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand req) =>
+            ResponseToFE(await Mediator.Send(req));
     }
 }
