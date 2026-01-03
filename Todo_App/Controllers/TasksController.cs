@@ -10,15 +10,12 @@ namespace Todo_App.Controllers
     public class TasksController : ApiController
     {
         [HttpPost()]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] CreateTaskCommand req) =>
             ResponseToFE(await Mediator.Send(req));
 
         [HttpGet()]
-        public async Task<IActionResult> GetAll([FromBody] int? userId) =>
-            Ok(await Mediator.Send(new GetTasksQuery
-            {
-                UserId = (int)userId
-            }));
+        public async Task<IActionResult> GetAll() =>
+            Ok(await Mediator.Send(new GetTasksQuery()));
     }
 }
