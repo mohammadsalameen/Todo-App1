@@ -24,7 +24,16 @@ namespace Todo_App
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularDev", policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200") // Angular dev URL
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials(); // needed if you send cookies/auth headers
+                });
+            });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddApplication();
@@ -84,7 +93,6 @@ namespace Todo_App
                     In = ParameterLocation.Header,
                     Description = "Enter: Bearer {your JWT token}"
                 });
-
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
         {
             {
@@ -120,7 +128,7 @@ namespace Todo_App
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors("AllowAngularDev");
             app.UseAuthentication();
             app.UseAuthorization();
 
