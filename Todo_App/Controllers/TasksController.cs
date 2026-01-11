@@ -20,6 +20,20 @@ namespace Todo_App.Controllers
         public async Task<IActionResult> ChangeStatus([FromBody] ChangeTaskStatusCommand req) =>
           ResponseToFE(await Mediator.Send(req));
 
+        [HttpPost("delete-task/{taskId}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteTask(Guid taskId) =>
+            ResponseToFE(await Mediator.Send(new DeleteTaskCommand
+            {
+                TaskItemId = taskId
+            }));
+
+        [HttpPost("edit-task")]
+        public async Task<IActionResult> UpdateTask([FromBody] UpdateTaskCommand req)
+        {
+            return ResponseToFE(await Mediator.Send(req));
+        }
+
 
 
         [HttpGet("my-tasks")]

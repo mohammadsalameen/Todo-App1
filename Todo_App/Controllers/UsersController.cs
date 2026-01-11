@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Todo_App.Application.User.Commands;
 using Todo_App.Application.User.Queries;
 
 namespace Todo_App.Controllers
@@ -10,6 +11,12 @@ namespace Todo_App.Controllers
 
     public class UsersController : ApiController
     {
+        [HttpPost("delete-user/{userId}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteUser(Guid userId)
+        {
+            return ResponseToFE(await Mediator.Send(new DeleteUserCommand { UserId = userId }));
+        }
         [HttpGet()]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllUsers() =>
