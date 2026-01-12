@@ -11,6 +11,13 @@ namespace Todo_App.Controllers
 
     public class UsersController : ApiController
     {
+        [HttpPost("create")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand req)
+        {
+            return ResponseToFE(await Mediator.Send(req));
+        }
+
         [HttpPost("delete-user/{userId}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(Guid userId)
