@@ -15,6 +15,15 @@ namespace Todo_App.Controllers
         public async Task<IActionResult> Create([FromBody] CreateCommentCommand req) =>
         ResponseToFE(await Mediator.Send(req));
 
+        [HttpPost("delete-comment/{taskId}/{commentId}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteComment(Guid taskId, Guid commentId) =>
+            ResponseToFE(await Mediator.Send(new DeleteCommentCommand
+            {
+                TaskItemId = taskId,
+                CommentId = commentId
+            }));
+
         [HttpGet("my-comments")]
         public async Task<IActionResult> GetAll() =>
         Ok(await Mediator.Send(new GetCommentsQuery()));

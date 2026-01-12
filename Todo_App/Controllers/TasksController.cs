@@ -29,6 +29,7 @@ namespace Todo_App.Controllers
             }));
 
         [HttpPost("edit-task")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> UpdateTask([FromBody] UpdateTaskCommand req)
         {
             return ResponseToFE(await Mediator.Send(req));
