@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 using Todo_App.Application.User.Commands;
 using Todo_App.Application.User.Queries;
 
@@ -11,12 +12,15 @@ namespace Todo_App.Controllers
 
     public class UsersController : ApiController
     {
-        [HttpPost("create")]
+        [HttpPost("create-user")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand req)
-        {
-            return ResponseToFE(await Mediator.Send(req));
-        }
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand req) =>
+            ResponseToFE(await Mediator.Send(req));
+
+        [HttpPost("update-user")]
+        [Authorize(Roles = "Admin, User")]
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand req) =>
+            ResponseToFE(await Mediator.Send(req));
 
         [HttpPost("delete-user/{userId}")]
         [Authorize(Roles = "Admin")]
