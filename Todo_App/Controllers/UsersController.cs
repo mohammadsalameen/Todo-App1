@@ -17,10 +17,13 @@ namespace Todo_App.Controllers
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand req) =>
             ResponseToFE(await Mediator.Send(req));
 
-        [HttpPost("update-user")]
-        [Authorize(Roles = "Admin, User")]
-        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand req) =>
-            ResponseToFE(await Mediator.Send(req));
+        [HttpPost("update-user/{userId}")]
+        [Authorize(Roles = "Admin,User")]
+        public async Task<IActionResult> UpdateUser(Guid userId, [FromBody] UpdateUserCommand req)
+        {
+            req.TargetUserId = userId;
+            return ResponseToFE(await Mediator.Send(req));
+        }
 
         [HttpPost("delete-user/{userId}")]
         [Authorize(Roles = "Admin")]

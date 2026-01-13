@@ -15,10 +15,13 @@ namespace Todo_App.Controllers
         public async Task<IActionResult> Create([FromBody] CreateTaskCommand req) =>
             ResponseToFE(await Mediator.Send(req));
 
-        [HttpPost("change-status")]
-        [Authorize(Roles = "Admin, User")]
-        public async Task<IActionResult> ChangeStatus([FromBody] ChangeTaskStatusCommand req) =>
-          ResponseToFE(await Mediator.Send(req));
+        [HttpPost("change-status/{taskId}")]
+        [Authorize(Roles = "Admin,User")]
+        public async Task<IActionResult> ChangeStatus(Guid taskId, [FromBody] ChangeTaskStatusCommand req)
+        {
+            req.TaskItemId = taskId;
+            return ResponseToFE(await Mediator.Send(req));
+        }
 
         [HttpPost("delete-task/{taskId}")]
         [Authorize(Roles = "Admin")]
@@ -28,10 +31,11 @@ namespace Todo_App.Controllers
                 TaskItemId = taskId
             }));
 
-        [HttpPost("edit-task")]
-        [Authorize(Roles = "Admin, User")]
-        public async Task<IActionResult> UpdateTask([FromBody] UpdateTaskCommand req)
+        [HttpPost("edit-task/{taskId}")]
+        [Authorize(Roles = "Admin,User")]
+        public async Task<IActionResult> UpdateTask(Guid taskId, [FromBody] UpdateTaskCommand req)
         {
+            req.TaskId = taskId;
             return ResponseToFE(await Mediator.Send(req));
         }
 
