@@ -43,5 +43,20 @@ namespace Todo_App.Controllers
             var result = await Mediator.Send(new GetUserTasksQuery());
             return Ok(result);
         }
+                [HttpGet("paged")]
+        [Authorize(Roles = "Admin,User")]
+        public async Task<IActionResult>GetPaged(
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10,
+            [FromQuery] string? search = null)
+        {
+            var result = await Mediator.Send(new GetUsersPagedQuery
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                Search = search
+            });
+            return Ok(result);
+        }
     }
 }

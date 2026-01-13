@@ -24,6 +24,7 @@ namespace Todo_App
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddHttpContextAccessor();
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAngularDev", policy =>
