@@ -56,20 +56,28 @@ namespace Todo_App.Controllers
             }));
         }
 
-        [HttpGet("paged")]
+        [HttpGet("{userId}/paged")]
         [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult>GetPaged(
+            Guid userId,
             [FromQuery] int pageNumber = 1,
             [FromQuery] int pageSize = 10,
             [FromQuery] string? search = null)
         {
             var result = await Mediator.Send(new GetTasksPagedQuery
             {
+                UserId = userId,
                 PageNumber = pageNumber,
                 PageSize = pageSize,
                 Search = search
             });
             return Ok(result);
+        }
+        [HttpGet("task-count")]
+        [Authorize(Roles = "Admin,User")]
+        public async Task<IActionResult> GetTasksCount()
+        {
+            return Ok(await Mediator.Send(new GetTasksCountQuery()));
         }
     }
 }
