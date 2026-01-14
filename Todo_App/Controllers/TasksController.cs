@@ -56,10 +56,10 @@ namespace Todo_App.Controllers
             }));
         }
 
-        [HttpGet("{userId}/paged")]
+        [HttpGet("paged")]
         [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult>GetPaged(
-            Guid userId,
+            [FromQuery]  Guid? userId = null,
             [FromQuery] int pageNumber = 1,
             [FromQuery] int pageSize = 10,
             [FromQuery] string? search = null)
