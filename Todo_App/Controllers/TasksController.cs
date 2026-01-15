@@ -63,6 +63,7 @@ namespace Todo_App.Controllers
         [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult>GetPaged(
             [FromQuery]  Guid? userId = null,
+            [FromQuery] string status = "all",
             [FromQuery] int pageNumber = 1,
             [FromQuery] int pageSize = 10,
             [FromQuery] string? search = null)
@@ -72,7 +73,8 @@ namespace Todo_App.Controllers
                 UserId = userId,
                 PageNumber = pageNumber,
                 PageSize = pageSize,
-                Search = search
+                Search = search,
+                Status = status
             });
             return Ok(result);
         }
