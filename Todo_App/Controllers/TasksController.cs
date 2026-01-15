@@ -43,8 +43,11 @@ namespace Todo_App.Controllers
 
         [HttpGet("my-tasks")]
         [Authorize(Roles = ("Admin, User"))]
-        public async Task<IActionResult> GetAll() =>
-            Ok(await Mediator.Send(new GetMyTasksQuery()));
+        public async Task<IActionResult> GetAll([FromQuery]Guid taskId) =>
+            Ok(await Mediator.Send(new GetMyTasksQuery
+            {
+                TaskId = taskId
+            }));
 
         [HttpGet("{userId}")]
         [Authorize(Roles = "Admin")]
@@ -78,6 +81,20 @@ namespace Todo_App.Controllers
         public async Task<IActionResult> GetTasksCount()
         {
             return Ok(await Mediator.Send(new GetTasksCountQuery()));
+        }
+
+        [HttpGet("filter")]
+        [Authorize(Roles = "Admin,User")]
+        public async Task<IActionResult>FilterTasks(
+            [FromQuery] string status = "all",
+            [FromQuery] Guid? userId = null
+            )
+        {
+            return Ok(await Mediator.Send(new FilterTasksQuery
+            {
+                Status = status,
+                UserId = userId
+            }));
         }
     }
 }

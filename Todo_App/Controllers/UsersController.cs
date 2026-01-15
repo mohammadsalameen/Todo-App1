@@ -31,6 +31,7 @@ namespace Todo_App.Controllers
         {
             return ResponseToFE(await Mediator.Send(new DeleteUserCommand { UserId = userId }));
         }
+
         [HttpGet()]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllUsers() =>
@@ -57,6 +58,14 @@ namespace Todo_App.Controllers
                 Search = search
             });
             return Ok(result);
+        }
+        [HttpGet("{userId}")]
+        [Authorize(Roles = "Admin,User")]
+        public async Task<IActionResult> GetUserById(Guid userId)
+        {
+            return Ok(
+                await Mediator.Send(new GetUserByIdQuery { UserId = userId })
+            );
         }
     }
 }
