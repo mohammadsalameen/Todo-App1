@@ -24,6 +24,17 @@ namespace Todo_App.Controllers
                 CommentId = commentId
             }));
 
+        [HttpPost("update-comment")]
+        [Authorize(Roles = "Admin,User")]
+        public async Task<IActionResult> Update([FromBody] UpdateCommentCommand req)
+        {
+            return ResponseToFE(await Mediator.Send(new UpdateCommentCommand
+            {
+                Id = req.Id,
+                Content = req.Content,
+            }));
+        }
+
         [HttpGet("my-comments")]
         public async Task<IActionResult> GetAll() =>
         Ok(await Mediator.Send(new GetCommentsQuery()));
