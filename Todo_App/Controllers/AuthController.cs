@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Todo_App.Application.Auth.Commands;
 using Todo_App.Application.Auth.Handlers;
 using Todo_App.Application.Auth.Queries;
+using Todo_App.Application.Common.SignalR;
 
 namespace Todo_App.Controllers
 {
@@ -10,14 +13,22 @@ namespace Todo_App.Controllers
     [ApiController]
     public class AuthController : ApiController
     {
+        private readonly IMediator _mediator;
 
+
+        public AuthController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+  
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterCommand req) =>
-            ResponseToFE(await Mediator.Send(req));
+            ResponseToFE(await _mediator.Send(req));
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginCommand req) =>
-            ResponseToFE(await Mediator.Send(req));
+            ResponseToFE(await _mediator.Send(req));
 
         [HttpGet("")]
         public async Task<IActionResult> GetAll() =>
@@ -26,7 +37,7 @@ namespace Todo_App.Controllers
         [HttpGet("confirm-email")]
         public async Task<IActionResult> ConfirmEmail([FromQuery] string token, [FromQuery] string userId)
         {
-            var result = await Mediator.Send(new ConfirmEmailCommand
+            var result = await _mediator.Send(new ConfirmEmailCommand
             {
                 Token = token,
                 UserId = userId
@@ -37,10 +48,10 @@ namespace Todo_App.Controllers
 
         [HttpPost("send-code")]
         public async Task<IActionResult> SendCode([FromBody] SendCodeCommand req) =>
-            ResponseToFE(await Mediator.Send(req));
+            ResponseToFE(await _mediator.Send(req));
 
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand req) =>
-            ResponseToFE(await Mediator.Send(req));
+            ResponseToFE(await _mediator.Send(req));
     }
 }

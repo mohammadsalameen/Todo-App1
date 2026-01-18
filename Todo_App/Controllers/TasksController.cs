@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Todo_App.Application.Tasks.Commands;
@@ -10,23 +11,29 @@ namespace Todo_App.Controllers
     [ApiController]
     public class TasksController : ApiController
     {
+        private readonly IMediator _mediator;
+
+        public TasksController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
         [HttpPost()]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] CreateTaskCommand req) =>
-            ResponseToFE(await Mediator.Send(req));
+            ResponseToFE(await _mediator.Send(req));
 
         [HttpPost("change-status/{taskId}")]
         [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> ChangeStatus(Guid taskId, [FromBody] ChangeTaskStatusCommand req)
         {
             req.TaskItemId = taskId;
-            return ResponseToFE(await Mediator.Send(req));
+            return ResponseToFE(await _mediator.Send(req));
         }
 
         [HttpPost("delete-task/{taskId}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteTask(Guid taskId) =>
-            ResponseToFE(await Mediator.Send(new DeleteTaskCommand
+            ResponseToFE(await _mediator.Send(new DeleteTaskCommand
             {
                 TaskItemId = taskId
             }));
@@ -36,7 +43,7 @@ namespace Todo_App.Controllers
         public async Task<IActionResult> UpdateTask(Guid taskId, [FromBody] UpdateTaskCommand req)
         {
             req.TaskId = taskId;
-            return ResponseToFE(await Mediator.Send(req));
+            return ResponseToFE(await _mediator.Send(req));
         }
 
 
@@ -44,7 +51,7 @@ namespace Todo_App.Controllers
         [HttpGet("my-tasks")]
         [Authorize(Roles = ("Admin, User"))]
         public async Task<IActionResult> GetAll([FromQuery]Guid taskId) =>
-            Ok(await Mediator.Send(new GetMyTasksQuery
+            Ok(await _mediator.Send(new GetMyTasksQuery
             {
                 TaskId = taskId
             }));
@@ -53,7 +60,7 @@ namespace Todo_App.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetTasksByUserId(Guid userId)
         {
-            return Ok(await Mediator.Send(new GetTasksByUserIdQuery
+            return Ok(await _mediator.Send(new GetTasksByUserIdQuery
             {
                 AssignedUserId = userId
             }));
@@ -68,7 +75,7 @@ namespace Todo_App.Controllers
             [FromQuery] int pageSize = 10,
             [FromQuery] string? search = null)
         {
-            var result = await Mediator.Send(new GetTasksPagedQuery
+            var result = await _mediator.Send(new GetTasksPagedQuery
             {
                 UserId = userId,
                 PageNumber = pageNumber,
@@ -82,7 +89,7 @@ namespace Todo_App.Controllers
         [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> GetTasksCount()
         {
-            return Ok(await Mediator.Send(new GetTasksCountQuery()));
+            return Ok(await _mediator.Send(new GetTasksCountQuery()));
         }
 
         [HttpGet("filter")]
@@ -92,7 +99,7 @@ namespace Todo_App.Controllers
             [FromQuery] Guid? userId = null
             )
         {
-            return Ok(await Mediator.Send(new FilterTasksQuery
+            return Ok(await _mediator.Send(new FilterTasksQuery
             {
                 Status = status,
                 UserId = userId

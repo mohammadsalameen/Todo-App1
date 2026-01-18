@@ -11,7 +11,7 @@ namespace Todo_App.DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<TaskItem> builder)
         {
-            builder.ToTable("Tasks");
+            builder.ToTable("TaskItems");
             builder.Property(t => t.Id).ValueGeneratedOnAdd();
             builder.Property(t => t.Title).IsRequired().HasMaxLength(200);
             builder.Property(t => t.Description).IsRequired().HasMaxLength(500);
@@ -19,7 +19,6 @@ namespace Todo_App.DataAccess.Configurations
                 .WithMany(u => u.Tasks)
                 .HasForeignKey(t => t.UserId)
                 .OnDelete(DeleteBehavior.Cascade); 
-
         }
     }
 }

@@ -20,7 +20,6 @@ namespace Todo_App.DataAccess.Configurations
             builder.HasOne(u => u.User)
                 .WithMany(c => c.Comments)
                 .HasForeignKey(u => u.UserId);
-
         }
     }
 }
